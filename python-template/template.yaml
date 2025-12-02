@@ -39,8 +39,8 @@ spec:
       input:
         url: ./template
         values:
-          name: ${{ parameters.name }}
-          owner: ${{ parameters.owner }}
+          app_name: ${{ parameters.component_id }}
+          app_env: ${{ parameters.environment }}
 
     - id: fetchDocs
       name: Fetch Docs
@@ -53,8 +53,11 @@ spec:
       name: Publish
       action: publish:github
       input:
-        description: This is ${{ parameters.name }}
-        repoUrl: ${{ parameters.repoUrl }}
+        allowedHosts:
+          - github.com
+        description: This is ${{ parameters.component_id }}
+        repoUrl: github.com?owner=limbuhimal&repo=${{ parameters.component_id }}
+        protectDefaultBranch: false
         defaultBranch: 'main'
 
     - id: register
