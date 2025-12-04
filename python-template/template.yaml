@@ -54,7 +54,7 @@ spec:
       action: publish:github
       input:
         description: This is ${{ parameters.component_id }}
-        repoUrl: github.com?owner=limbuhimal&repo=${{ parameters.component_id }}
+        repoUrl: github.com?owner=limbuhimal-1&repo=${{ parameters.component_id }}
         protectDefaultBranch: false
         defaultBranch: 'main'
 
