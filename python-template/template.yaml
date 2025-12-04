@@ -27,8 +27,6 @@ spec:
           description: The environment where this component will be deployed
           enum:
             - dev
-            - qa
-            - staging
             - prod
 
   # here's the steps that are executed in series in the scaffolder backend
@@ -55,6 +53,7 @@ spec:
       input:
         description: This is ${{ parameters.component_id }}
         repoUrl: github.com?owner=limbuhimal-1&repo=${{ parameters.component_id }}
+        repoVisibility: public
         protectDefaultBranch: false
         defaultBranch: 'main'
 
