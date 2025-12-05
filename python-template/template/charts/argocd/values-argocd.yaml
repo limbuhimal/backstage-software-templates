@@ -18,8 +18,11 @@ server:
     - --insecure # Forces HTTP mode to avoid certificate errors on local access
   
   ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     enabled: true
     ingressClassName: nginx
+    tls: true
     # Remove TLS annotations if using --insecure
 
 # REPO SERVER CONFIGURATION (The failing component)

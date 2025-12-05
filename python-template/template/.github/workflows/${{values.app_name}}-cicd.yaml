@@ -62,9 +62,28 @@ jobs:
           --grpc-web \
           --plaintext \
           --password ${{ '${{ secrets.ARGOCD_PW }}' }}
-      -
-        name: Sync Application
+      - name: Ensure argocd repo and add
+        shell: bash
+        run: |
+          repo="https://github.com/limbuhimal-1/${{values.app_name}}.git"
+
+        # connects the argocd repo  
+          argocd repo list | grep -q $repo || argocd repo add $repo
+
+        # creates the argocd repo
+          argocd app get ${{values.app_name}} || argocd app create ${{values.app_name}} \
+            --repo $repo \
+            --path charts/${{values.app_name}} \
+            --dest-namespace ${{values.app_env}} \
+            --dest-server https://kubernetes.default.svc \
+            --values values-${{values.app_env}}.yaml \
+            --revision master \
+            --sync-policy manual \
+            --sync-option CreateNamespace=true
+
+      - name: Sync Application
         shell: bash
         run: |
           argocd app sync ${{values.app_name}}
+          argocd app wait $app_to_sync --timeout 180
       
